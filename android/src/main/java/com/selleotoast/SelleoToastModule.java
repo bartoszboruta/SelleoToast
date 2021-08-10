@@ -1,6 +1,9 @@
 package com.selleotoast;
 
 import androidx.annotation.NonNull;
+import android.content.Context;
+import android.widget.Toast;
+import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -11,9 +14,11 @@ import com.facebook.react.module.annotations.ReactModule;
 @ReactModule(name = SelleoToastModule.NAME)
 public class SelleoToastModule extends ReactContextBaseJavaModule {
     public static final String NAME = "SelleoToast";
+    private Context mContext;
 
     public SelleoToastModule(ReactApplicationContext reactContext) {
         super(reactContext);
+        this.mContext = reactContext;
     }
 
     @Override
@@ -22,13 +27,10 @@ public class SelleoToastModule extends ReactContextBaseJavaModule {
         return NAME;
     }
 
-
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
     @ReactMethod
-    public void multiply(int a, int b, Promise promise) {
-        promise.resolve(a * b);
+    public void showToast(String message, int duration) {
+        Toast toast = Toast.makeText(this.mContext, message, duration);
+        toast.show();
+        Log.d("SelleoToast", "Create toast" + message);
     }
-
-    public static native int nativeMultiply(int a, int b);
 }
